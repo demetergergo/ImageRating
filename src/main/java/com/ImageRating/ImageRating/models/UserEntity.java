@@ -12,6 +12,7 @@ public record UserEntity(
         String username,
         String email,
         String password,
+        String biography,
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
         List<Role> roles
