@@ -1,4 +1,9 @@
 package com.ImageRating.ImageRating.models;
 
-public record Role() {
+import jakarta.persistence.Entity;
+
+
+public enum Role {
+    USER,
+    ADMIN
 }

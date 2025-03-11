@@ -1,24 +1,27 @@
 package com.ImageRating.ImageRating.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-@Table
-public record post(
+@Table(name = "posts")
+@Entity
+public record Post(
         @Id
         @GeneratedValue(strategy = GenerationType.UUID)
         UUID id,
 
         String title,
-        Image image,
-        double rating,
+        String description,
+
+        @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+        List<Image> images,
 
         @CreationTimestamp
         LocalDateTime createdOn,
