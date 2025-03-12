@@ -1,13 +1,16 @@
 package com.ImageRating.ImageRating.dto;
 
-import com.ImageRating.ImageRating.models.Post;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 
-public record ImageDto(
-    UUID id,
-    String photoUrl,
-    double rating,
-    Post post
-) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ImageDto {
+    private UUID id;
+    private String photoUrl;
+    private double rating;
 }

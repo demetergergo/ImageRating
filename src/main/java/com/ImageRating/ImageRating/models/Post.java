@@ -1,31 +1,37 @@
 package com.ImageRating.ImageRating.models;
 
+import com.ImageRating.ImageRating.models.Image;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Table(name = "posts")
 @Entity
-public record Post(
-        @Id
-        @GeneratedValue(strategy = GenerationType.UUID)
-        UUID id,
+@Table(name = "posts")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-        String title,
-        String description,
+    private String title;
+    private String description;
 
-        @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-        List<Image> images,
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
 
-        @CreationTimestamp
-        LocalDateTime createdOn,
+    @CreationTimestamp
+    private LocalDateTime createdOn;
 
-        @UpdateTimestamp
-        LocalDateTime updatedOn) {
+    @UpdateTimestamp
+    private LocalDateTime updatedOn;
 }

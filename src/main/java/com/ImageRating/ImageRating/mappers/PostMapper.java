@@ -11,22 +11,22 @@ import static com.ImageRating.ImageRating.mappers.ImageMapper.mapToImageDto;
 public class PostMapper {
     public static PostDto mapToPostDto(Post post) {
         return new PostDto(
-                post.id(),
-                post.title(),
-                post.description(),
-                post.images().stream().map(ImageMapper::mapToImageDto).collect(Collectors.toList()),
-                post.createdOn(),
-                post.updatedOn()
+                post.getId(),
+                post.getTitle(),
+                post.getDescription(),
+                post.getImages().stream().map(ImageMapper::mapToImageDto).collect(Collectors.toList()),
+                post.getCreatedOn(),
+                post.getUpdatedOn()
         );
     }
-    public static Post mapToPost(PostDto postDto) {
-        return new Post(
-                postDto.id(),
-                postDto.title(),
-                postDto.description(),
-                postDto.images().stream().map(ImageMapper::mapToImage).collect(Collectors.toList()),
-                postDto.createdOn(),
-                postDto.updatedOn()
-        );
-    }
+public static Post mapToPost(PostDto postDto) {
+    Post post = new Post();
+    post.setId(postDto.getId());
+    post.setTitle(postDto.getTitle());
+    post.setDescription(postDto.getDescription());
+    post.setImages(postDto.getImages().stream().map(ImageMapper::mapToImage).collect(Collectors.toList()));
+    post.setCreatedOn(postDto.getCreatedOn());
+    post.setUpdatedOn(postDto.getUpdatedOn());
+    return post;
+}
 }

@@ -6,18 +6,15 @@ import com.ImageRating.ImageRating.models.Image;
 public class ImageMapper {
     public static ImageDto mapToImageDto(Image image) {
         return new ImageDto(
-                image.id(),
-                image.photoUrl(),
-                image.rating(),
-                image.post()
+                image.getId(),
+                image.getPhotoUrl(),
+                image.getRating()
         );
     }
     public static Image mapToImage(ImageDto imageDto) {
-        return new Image(
-                imageDto.id(),
-                imageDto.photoUrl(),
-                imageDto.rating(),
-                imageDto.post()
-        );
+        Image image = new Image();
+        image.setPhotoUrl(imageDto.getPhotoUrl());
+        image.setRating(imageDto.getRating());
+        return image;
     }
 }
