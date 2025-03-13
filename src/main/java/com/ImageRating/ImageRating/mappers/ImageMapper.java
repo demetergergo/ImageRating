@@ -13,6 +13,7 @@ public class ImageMapper {
     }
     public static Image mapToImage(ImageDto imageDto) {
         Image image = new Image();
+        image.setId(imageDto.getId());
         image.setPhotoUrl(imageDto.getPhotoUrl());
         image.setRating(imageDto.getRating());
         return image;
