@@ -29,12 +29,12 @@ public class ImageController {
         return new ResponseEntity<>(imageService.getImageById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/images/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ImageDto> createImage(@RequestBody ImageDto imageDto) {
-        ImageDto result = imageService.saveImage(imageDto);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-    }
+//    @PostMapping("/images/create")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ResponseEntity<ImageDto> createImage(@RequestBody ImageDto imageDto) {
+//        ImageDto result = imageService.saveImage(imageDto);
+//        return new ResponseEntity<>(result, HttpStatus.CREATED);
+//    }
 
     @PutMapping("/images/{id}/update")
     public ResponseEntity<ImageDto> updateImage(@PathVariable UUID id, @RequestBody ImageDto imageDto) {

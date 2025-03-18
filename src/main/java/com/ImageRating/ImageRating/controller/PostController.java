@@ -25,33 +25,41 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDto>> listPosts() {
-        return new ResponseEntity<>(postService.findAllPosts(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<PostDto> listPosts() {
+        return postService.findAllPosts();
     }
 
     @PostMapping("/posts/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
-        PostDto result = postService.savePost(postDto);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    @ResponseBody
+    public PostDto createPost(@RequestBody PostDto postDto) {
+        return postService.savePost(postDto);
     }
 
     @PutMapping("/posts/{id}/update")
-    public ResponseEntity<PostUpdateDto> updatePost(@PathVariable UUID id, @RequestBody PostUpdateDto postUpdateDto) {
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public PostDto updatePost(@PathVariable UUID id, @RequestBody PostUpdateDto postUpdateDto) {
         postUpdateDto.setId(id);
         postService.updatePost(postUpdateDto);
-        return new ResponseEntity<>(postUpdateDto, HttpStatus.OK);
+        return postService.getPostById(postUpdateDto.getId());
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity<PostDto> getPost(@PathVariable UUID id) {
-        return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public PostDto getPost(@PathVariable UUID id) {
+        return postService.getPostById(id);
     }
 
     @DeleteMapping("/posts/{id}/delete")
-    public ResponseEntity<String> deletePost(@PathVariable UUID id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public String deletePost(@PathVariable UUID id) {
         postService.deletePostById(id);
-        return new ResponseEntity<>("Post deleted", HttpStatus.OK);
+        return "Post deleted";
     }
 
 }
