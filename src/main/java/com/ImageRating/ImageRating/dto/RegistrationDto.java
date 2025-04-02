@@ -1,4 +1,11 @@
 package com.ImageRating.ImageRating.dto;
 
-public class RegistrationDto {
+import lombok.Data;
+
+
+public record RegistrationDto(
+        String userName,
+        String password,
+        String email,
+        String biography) {
 }

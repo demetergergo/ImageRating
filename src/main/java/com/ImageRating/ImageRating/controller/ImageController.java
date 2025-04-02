@@ -20,13 +20,15 @@ public class ImageController {
     }
 
     @GetMapping("/images")
-    public ResponseEntity<List<ImageDto>> imageList() {
-        return new ResponseEntity<>(imageService.findAllImages(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<ImageDto> imageList() {
+        return imageService.findAllImages();
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/images/{id}")
-    public ResponseEntity<ImageDto> getImageById(@PathVariable UUID id) {
-        return new ResponseEntity<>(imageService.getImageById(id), HttpStatus.OK);
+    public ImageDto getImageById(@PathVariable UUID id) {
+        return imageService.getImageById(id);
     }
 
 //    @PostMapping("/images/create")
@@ -37,15 +39,17 @@ public class ImageController {
 //    }
 
     @PutMapping("/images/{id}/update")
-    public ResponseEntity<ImageDto> updateImage(@PathVariable UUID id, @RequestBody ImageDto imageDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public ImageDto updateImage(@PathVariable UUID id, @RequestBody ImageDto imageDto) {
         imageDto.setId(id);
         imageService.updateImage(imageDto);
-        return new ResponseEntity<>(imageDto, HttpStatus.OK);
+        return imageDto;
     }
 
     @DeleteMapping("/images/{id}/delete")
-    public ResponseEntity<String> deleteImage(@PathVariable UUID id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteImage(@PathVariable UUID id) {
         imageService.deleteImageById(id);
-        return new ResponseEntity<>("Image deleted", HttpStatus.OK);
+        return "Image deleted";
     }
 }

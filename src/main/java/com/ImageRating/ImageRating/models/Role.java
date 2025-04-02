@@ -1,9 +1,19 @@
 package com.ImageRating.ImageRating.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-public enum Role {
-    USER,
-    ADMIN
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Enumerated(EnumType.STRING)
+    private Roles role;
 }
+
