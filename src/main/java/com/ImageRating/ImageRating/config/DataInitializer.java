@@ -18,10 +18,10 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (roleRepository.findByRole(Roles.USER).isEmpty()) {
-            roleRepository.save(new Role(null, Roles.USER));
+            roleRepository.save(new Role(Roles.USER));
         }
         if (roleRepository.findByRole(Roles.ADMIN).isEmpty()) {
-            roleRepository.save(new Role(null, Roles.ADMIN));
+            roleRepository.save(new Role(Roles.ADMIN));
         }
     }
 }
