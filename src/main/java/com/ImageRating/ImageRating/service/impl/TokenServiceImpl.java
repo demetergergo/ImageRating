@@ -1,5 +1,6 @@
 package com.ImageRating.ImageRating.service.impl;
 
+import com.ImageRating.ImageRating.models.TokenResponse;
 import com.ImageRating.ImageRating.service.TokenService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,7 +20,7 @@ public class TokenServiceImpl implements TokenService {
     public TokenServiceImpl(JwtEncoder encoder) {
         this.encoder = encoder;
     }
-    public String generateToken(Authentication authentication) {
+    public TokenResponse generateToken(Authentication authentication) {
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -31,7 +32,7 @@ public class TokenServiceImpl implements TokenService {
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .build();
-        return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        return new TokenResponse(this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue());
     }
 
 }
