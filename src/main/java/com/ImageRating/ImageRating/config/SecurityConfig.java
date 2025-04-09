@@ -51,18 +51,16 @@ public class SecurityConfig {
         return new ProviderManager(authProvider);
     }
 
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/token", "/auth/register", "/auth/login", "/auth/logout").permitAll()
+                        .requestMatchers("/auth/token", "/auth/register", "/auth/login", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                 .exceptionHandling((ex) -> ex
+                .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 )
@@ -81,10 +79,6 @@ public class SecurityConfig {
         return new NimbusJwtEncoder(jwks);
     }
 
-//    @Bean
-//    PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
     @Bean
     PasswordEncoder passwordEncoder() {
         String idForEncode = "bcrypt";

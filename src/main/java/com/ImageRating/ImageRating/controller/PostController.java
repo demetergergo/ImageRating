@@ -1,18 +1,13 @@
 package com.ImageRating.ImageRating.controller;
 
-import com.ImageRating.ImageRating.dto.ImageDto;
+import com.ImageRating.ImageRating.dto.CreatePostDto;
 import com.ImageRating.ImageRating.dto.PostDto;
 import com.ImageRating.ImageRating.dto.PostUpdateDto;
-import com.ImageRating.ImageRating.models.Image;
-import com.ImageRating.ImageRating.models.Post;
 import com.ImageRating.ImageRating.service.PostService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,8 +29,8 @@ public class PostController {
     @PostMapping("/posts/create")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public PostDto createPost(@RequestBody PostDto postDto) {
-        return postService.savePost(postDto);
+    public PostDto createPost(@RequestBody CreatePostDto createPostDto) {
+        return postService.savePost(createPostDto);
     }
 
     @PutMapping("/posts/{id}/update")

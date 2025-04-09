@@ -1,15 +1,14 @@
 package com.ImageRating.ImageRating.service.impl;
 
+import com.ImageRating.ImageRating.dto.CreatePostDto;
 import com.ImageRating.ImageRating.dto.PostDto;
 import com.ImageRating.ImageRating.dto.PostUpdateDto;
 import com.ImageRating.ImageRating.mappers.PostMapper;
-import com.ImageRating.ImageRating.models.Image;
 import com.ImageRating.ImageRating.models.Post;
 import com.ImageRating.ImageRating.repository.PostRepository;
 import com.ImageRating.ImageRating.service.PostService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,12 +30,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto savePost(PostDto postDto) {
-        Post post = PostMapper.mapToPost(postDto);
+    public PostDto savePost(CreatePostDto createPostDto) {
+        Post post = PostMapper.mapToPost(createPostDto);
         post.getImages().forEach(image -> image.setPost(post));
-        postRepository.save(post);
-        PostDto postDtoResponse = PostMapper.mapToPostDto(post);
-        return postDtoResponse;
+        Post postRespone = postRepository.save(post);
+        return PostMapper.mapToPostDto(postRespone);
     }
 
     @Override

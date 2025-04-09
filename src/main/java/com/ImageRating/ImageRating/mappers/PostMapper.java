@@ -1,13 +1,11 @@
 package com.ImageRating.ImageRating.mappers;
 
-import com.ImageRating.ImageRating.dto.ImageDto;
+import com.ImageRating.ImageRating.dto.CreatePostDto;
 import com.ImageRating.ImageRating.dto.PostDto;
 import com.ImageRating.ImageRating.dto.PostUpdateDto;
 import com.ImageRating.ImageRating.models.Post;
 
 import java.util.stream.Collectors;
-
-import static com.ImageRating.ImageRating.mappers.ImageMapper.mapToImageDto;
 
 public class PostMapper {
     public static PostDto mapToPostDto(Post post) {
@@ -30,6 +28,14 @@ public class PostMapper {
         post.setId(postUpdateDto.getId());
         post.setTitle(postUpdateDto.getTitle());
         post.setDescription(postUpdateDto.getDescription());
+        return post;
+    }
+
+    public static Post mapToPost(CreatePostDto createPostDto){
+        Post post = new Post();
+        post.setTitle(createPostDto.getTitle());
+        post.setDescription(createPostDto.getDescription());
+        post.setImages(createPostDto.getImages().stream().map(ImageMapper::mapToImage).collect(Collectors.toList()));
         return post;
     }
 }

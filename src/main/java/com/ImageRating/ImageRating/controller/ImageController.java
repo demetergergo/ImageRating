@@ -1,17 +1,14 @@
 package com.ImageRating.ImageRating.controller;
 
 import com.ImageRating.ImageRating.dto.ImageDto;
-import com.ImageRating.ImageRating.dto.PostDto;
 import com.ImageRating.ImageRating.service.ImageService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 public class ImageController {
     private ImageService imageService;
 
