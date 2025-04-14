@@ -9,12 +9,16 @@ import com.ImageRating.ImageRating.service.UserRegistrationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
@@ -52,4 +56,31 @@ public class AuthController {
         }
         return "logout success";
     }
+
+    @GetMapping("/admin")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public String admin() {
+        return "admin ";
+    }
+    @GetMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
+    public String user() {
+        return "user ";
+    }
+
+
+    @GetMapping("/usersRoles")
+    @ResponseStatus(HttpStatus.OK)
+    public String usersRoles() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        String roles = auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(", "));
+        return "User: " + name + " has roles: " + roles;
+    }
+
+
 }

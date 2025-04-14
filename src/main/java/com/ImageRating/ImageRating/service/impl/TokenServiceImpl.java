@@ -34,5 +34,4 @@ public class TokenServiceImpl implements TokenService {
                 .build();
         return new TokenResponse(this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue());
     }
-
 }
