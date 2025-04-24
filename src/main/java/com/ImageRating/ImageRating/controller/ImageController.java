@@ -4,6 +4,7 @@ import com.ImageRating.ImageRating.dto.ImageDto;
 import com.ImageRating.ImageRating.service.ImageInteractionService;
 import com.ImageRating.ImageRating.service.ImageService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ public class ImageController {
 
     @DeleteMapping("/images/{id}/delete")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public String deleteImage(@PathVariable UUID id) {
         imageService.deleteImageById(id);
         return "Image deleted";
@@ -41,6 +43,7 @@ public class ImageController {
 
     @PutMapping("/images/{id}/like")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public String likeImage(@PathVariable UUID id) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         imageInteractionService.likeImageToggle(id, userName);

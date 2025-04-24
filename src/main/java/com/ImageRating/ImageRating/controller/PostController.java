@@ -5,6 +5,7 @@ import com.ImageRating.ImageRating.dto.PostDto;
 import com.ImageRating.ImageRating.dto.PostUpdateDto;
 import com.ImageRating.ImageRating.service.PostService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class PostController {
 
     @PostMapping("/posts/create")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     @ResponseBody
     public PostDto createPost(@RequestBody CreatePostDto createPostDto) {
         return postService.savePost(createPostDto);
@@ -35,6 +37,7 @@ public class PostController {
 
     @PutMapping("/posts/{id}/update")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @ResponseBody
     public PostDto updatePost(@PathVariable UUID id, @RequestBody PostUpdateDto postUpdateDto) {
         postUpdateDto.setId(id);
@@ -51,6 +54,7 @@ public class PostController {
 
     @DeleteMapping("/posts/{id}/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @ResponseBody
     public String deletePost(@PathVariable UUID id) {
         postService.deletePostById(id);

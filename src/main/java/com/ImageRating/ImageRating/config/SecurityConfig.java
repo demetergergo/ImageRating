@@ -58,7 +58,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/token", "/auth/register", "/auth/login", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
+                        .requestMatchers("/auth/token", "/auth/register", "/auth/login", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml", "/posts").permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))

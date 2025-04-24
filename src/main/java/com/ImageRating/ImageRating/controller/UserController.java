@@ -3,6 +3,7 @@ package com.ImageRating.ImageRating.controller;
 import com.ImageRating.ImageRating.dto.ProfileDto;
 import com.ImageRating.ImageRating.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class UserController {
     }
 
     @PutMapping("/promoteToAdmin")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public String makeAdmin(@RequestBody UUID id) {
         userService.promoteUserToAdmin(id);
@@ -27,6 +29,7 @@ public class UserController {
     }
 
     @PutMapping("/promoteCurrentUserToAdmin")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     @ResponseStatus(HttpStatus.OK)
     public String makeCurrentUserAdmin() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -35,6 +38,7 @@ public class UserController {
     }
 
     @PutMapping("/demoteFromAdmin")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public String demoteAdmin(@RequestBody UUID id) {
         userService.demoteUserFromAdmin(id);
@@ -42,6 +46,7 @@ public class UserController {
     }
 
     @GetMapping("/getUsers")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public List<ProfileDto> getCurrentUser() {
         return userService.getAllUsers();

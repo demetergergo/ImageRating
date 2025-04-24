@@ -71,9 +71,9 @@ public class AuthController {
     }
 
 
-    @GetMapping("/usersRoles")
+    @GetMapping("/currentUsersRoles")
     @ResponseStatus(HttpStatus.OK)
-    public String usersRoles() {
+    public String currentUsersRoles() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         String roles = auth.getAuthorities().stream()
