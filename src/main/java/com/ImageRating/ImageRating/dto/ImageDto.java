@@ -12,5 +12,5 @@ import java.util.UUID;
 public class ImageDto {
     private UUID id;
     private String photoUrl;
-    private double rating;
+    private int rating;
 }

@@ -9,20 +9,18 @@ public class ImageMapper {
         return new ImageDto(
                 image.getId(),
                 image.getPhotoUrl(),
-                image.getRating()
+                image.getUserLikes().size()
         );
     }
     public static Image mapToImage(ImageDto imageDto) {
         Image image = new Image();
         image.setId(imageDto.getId());
         image.setPhotoUrl(imageDto.getPhotoUrl());
-        image.setRating(imageDto.getRating());
         return image;
     }
     public static Image mapToImage(CreateImageDto createImageDto) {
         Image image = new Image();
         image.setPhotoUrl(createImageDto.getPhotoUrl());
-        image.setRating(createImageDto.getRating());
         return image;
     }
 }

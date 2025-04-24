@@ -1,7 +1,6 @@
 package com.ImageRating.ImageRating.mappers;
 
 import com.ImageRating.ImageRating.dto.ImageDto;
-import com.ImageRating.ImageRating.dto.ProfileDto;
 import com.ImageRating.ImageRating.dto.RegistrationDto;
 import com.ImageRating.ImageRating.models.Image;
 import com.ImageRating.ImageRating.models.UserEntity;
@@ -11,7 +10,7 @@ public class RegistrationMapper {
         return new ImageDto(
                 image.getId(),
                 image.getPhotoUrl(),
-                image.getRating()
+                image.getUserLikes().size()
         );
     }
 

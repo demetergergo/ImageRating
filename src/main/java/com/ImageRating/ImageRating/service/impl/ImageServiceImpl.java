@@ -1,10 +1,8 @@
 package com.ImageRating.ImageRating.service.impl;
 
 import com.ImageRating.ImageRating.dto.ImageDto;
-import com.ImageRating.ImageRating.dto.PostDto;
 import com.ImageRating.ImageRating.mappers.ImageMapper;
 import com.ImageRating.ImageRating.models.Image;
-import com.ImageRating.ImageRating.models.Post;
 import com.ImageRating.ImageRating.repository.ImageRepository;
 import com.ImageRating.ImageRating.service.ImageService;
 import org.springframework.stereotype.Service;
@@ -29,22 +27,10 @@ public class ImageServiceImpl implements ImageService {
                 .toList();
     }
 
-    @Override
-    public ImageDto saveImage(ImageDto imageDto) {
-        Image image = ImageMapper.mapToImage(imageDto);
-        imageRepository.save(image);
-        return ImageMapper.mapToImageDto(image);
-    }
 
     @Override
     public ImageDto getImageById(UUID id) {
         return ImageMapper.mapToImageDto(findOriginalImage(id));
-    }
-
-    @Override
-    public void updateImage(ImageDto imageDto) {
-        Image image = ImageMapper.mapToImage(imageDto);
-        imageRepository.save(image);
     }
 
     @Override
@@ -53,9 +39,22 @@ public class ImageServiceImpl implements ImageService {
         imageRepository.deleteById(id);
     }
 
-    private Image findOriginalImage(UUID imageId) {
+    protected Image findOriginalImage(UUID imageId) {
         return imageRepository.findById(imageId).orElseThrow(() ->
                 new RuntimeException("Post not found " +
                         "//TODO: Add custom exception"));
     }
+
+//    @Override
+//    public ImageDto saveImage(ImageDto imageDto) {
+//        Image image = ImageMapper.mapToImage(imageDto);
+//        imageRepository.save(image);
+//        return ImageMapper.mapToImageDto(image);
+//    }
+
+//    @Override
+//    public void updateImage(ImageDto imageDto) {
+//        Image image = ImageMapper.mapToImage(imageDto);
+//        imageRepository.save(image);
+//    }
 }

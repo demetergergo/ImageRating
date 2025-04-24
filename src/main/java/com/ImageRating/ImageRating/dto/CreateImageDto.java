@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateImageDto {
     private String photoUrl;
-    private double rating;
+    private int rating;
 }

@@ -56,7 +56,7 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(id);
     }
 
-    private Post findOriginalPost(UUID postDto) {
+    protected Post findOriginalPost(UUID postDto) {
         return postRepository.findById(postDto).orElseThrow(() ->
                 new RuntimeException("Post not found " +
                         "//TODO: Add custom exception"));
