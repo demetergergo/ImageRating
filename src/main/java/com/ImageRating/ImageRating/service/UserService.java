@@ -6,6 +6,7 @@ import com.ImageRating.ImageRating.dto.RoleDto;
 import com.ImageRating.ImageRating.models.Role;
 import com.ImageRating.ImageRating.models.UserEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
@@ -14,4 +15,5 @@ public interface UserService {
     UUID findByUsername(String username);
     void promoteUserToAdmin(UUID userId);
     void demoteUserFromAdmin(UUID userId);
+    List<ProfileDto> getAllUsers();
 }
