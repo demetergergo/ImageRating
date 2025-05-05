@@ -39,7 +39,7 @@ import java.util.Map;
 public class SecurityConfig {
 
     private final RsaKeyProperties rsaKeys;
-    private CustomUserDetailsServiceImpl userDetailsService;
+    private final CustomUserDetailsServiceImpl userDetailsService;
 
     public SecurityConfig(RsaKeyProperties rsaKeys, CustomUserDetailsServiceImpl userDetailsService) {
         this.rsaKeys = rsaKeys;
@@ -56,6 +56,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/token", "/auth/register", "/auth/login", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml", "/posts").permitAll()
