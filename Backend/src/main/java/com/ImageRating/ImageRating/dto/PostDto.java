@@ -16,6 +16,7 @@ public class PostDto {
     private UUID id;
     private String title;
     private String description;
+    private int rating;
     private List<ImageDto> images;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;

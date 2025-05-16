@@ -1,7 +1,7 @@
 package com.ImageRating.ImageRating.controller;
 
 import com.ImageRating.ImageRating.dto.ImageDto;
-import com.ImageRating.ImageRating.service.ImageInteractionService;
+import com.ImageRating.ImageRating.service.PostInteractionService;
 import com.ImageRating.ImageRating.service.ImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,11 +14,9 @@ import java.util.UUID;
 @RestController
 public class ImageController {
     private ImageService imageService;
-    private ImageInteractionService imageInteractionService;
 
-    public ImageController(ImageService imageService, ImageInteractionService imageInteractionService) {
+    public ImageController(ImageService imageService) {
         this.imageService = imageService;
-        this.imageInteractionService = imageInteractionService;
     }
 
     @GetMapping("/images")
@@ -40,16 +38,6 @@ public class ImageController {
         imageService.deleteImageById(id);
         return "Image deleted";
     }
-
-    @PutMapping("/images/{id}/like")
-    @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('SCOPE_USER')")
-    public String likeImage(@PathVariable UUID id) {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        imageInteractionService.likeImageToggle(id, userName);
-        return "Image like toggled";
-    }
-
 //    @PostMapping("/images/create")
 //    @ResponseStatus(HttpStatus.CREATED)
 //    public ResponseEntity<ImageDto> createImage(@RequestBody ImageDto imageDto) {

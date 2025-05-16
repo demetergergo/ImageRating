@@ -19,14 +19,6 @@ public class Image {
     private UUID id;
     private String photoUrl;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-      name = "image_likes",
-      joinColumns = @JoinColumn(name = "image_id"),
-      inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<UserEntity> userLikes = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="post_id")
     private Post post;

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class PostMapper {
     public static PostDto mapToPostDto(Post post) {
-        return new PostDto(post.getId(), post.getTitle(), post.getDescription(), post.getImages().stream().map(ImageMapper::mapToImageDto).collect(Collectors.toList()), post.getCreatedOn(), post.getUpdatedOn());
+        return new PostDto(post.getId(), post.getTitle(), post.getDescription(), post.getUserLikes().size(), post.getImages().stream().map(ImageMapper::mapToImageDto).collect(Collectors.toList()), post.getCreatedOn(), post.getUpdatedOn());
     }
 
     public static Post mapToPost(PostDto postDto) {

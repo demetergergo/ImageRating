@@ -3,9 +3,11 @@ package com.ImageRating.ImageRating.controller;
 import com.ImageRating.ImageRating.dto.CreatePostDto;
 import com.ImageRating.ImageRating.dto.PostDto;
 import com.ImageRating.ImageRating.dto.PostUpdateDto;
+import com.ImageRating.ImageRating.service.PostInteractionService;
 import com.ImageRating.ImageRating.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +17,11 @@ import java.util.UUID;
 @Controller
 public class PostController {
     private final PostService postService;
+    private final PostInteractionService postInteractionService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, PostInteractionService postInteractionService) {
         this.postService = postService;
+        this.postInteractionService = postInteractionService;
     }
 
     @GetMapping("/posts")
@@ -59,6 +63,16 @@ public class PostController {
     public String deletePost(@PathVariable UUID id) {
         postService.deletePostById(id);
         return "Post deleted";
+    }
+
+    @PutMapping("/posts/{id}/like")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
+    @ResponseBody
+    public String toggleLikePost(@PathVariable UUID id) {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        postInteractionService.likePostToggle(id, userName);
+        return "Post like toggled";
     }
 
 }

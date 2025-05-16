@@ -8,8 +8,7 @@ public class ImageMapper {
     public static ImageDto mapToImageDto(Image image) {
         return new ImageDto(
                 image.getId(),
-                image.getPhotoUrl(),
-                image.getUserLikes().size()
+                image.getPhotoUrl()
         );
     }
     public static Image mapToImage(ImageDto imageDto) {

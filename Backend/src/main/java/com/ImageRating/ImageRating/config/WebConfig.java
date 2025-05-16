@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig {
 
-    // Inject the allowed origin from application.properties
     @Value("${cors.allowed-origins}")
     private String allowedOrigins;
 
@@ -18,11 +17,11 @@ public class WebConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Apply CORS to all endpoints
-                        .allowedOrigins(allowedOrigins.split(",")) // Allow specific origins from properties
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allowed HTTP methods
-                        .allowedHeaders("*") // Allow all headers
-                        .allowCredentials(true); // Allow credentials like cookies
+                registry.addMapping("/**")
+                        .allowedOrigins(allowedOrigins.split(","))
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }
