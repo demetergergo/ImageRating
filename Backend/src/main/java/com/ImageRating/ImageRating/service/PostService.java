@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PostService {
-    List<PostDto> findAllPosts();
+    List<PostDto> findAllPosts(String username);
     PostDto savePost(CreatePostDto createPostDto);
     PostDto getPostById(UUID id);
     void updatePost(PostUpdateDto postUpdateDto);

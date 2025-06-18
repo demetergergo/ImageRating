@@ -11,30 +11,34 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
     public PostServiceImpl(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
+    private boolean isPostFavoritedByCurrentUser(Post post, String username) {
+        return post.getUserLikes().stream()
+                .anyMatch(user -> user.getUsername().equals(username));
+    }
 
     @Override
-    public List<PostDto> findAllPosts() {
+    public List<PostDto> findAllPosts(String username) {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
-                .map(PostMapper::mapToPostDto)
-                .toList();
+                .map(post -> PostMapper.mapToPostDto(post, isPostFavoritedByCurrentUser(post, username)))
+                .collect(Collectors.toList());
     }
 
     @Override
     public PostDto savePost(CreatePostDto createPostDto) {
         Post post = PostMapper.mapToPost(createPostDto);
-        post.getImages().forEach(image -> image.setPost(post));
-        Post postRespone = postRepository.save(post);
-        return PostMapper.mapToPostDto(postRespone);
+        Post savedPost = postRepository.save(post);
+        return PostMapper.mapToPostDto(savedPost);
     }
 
     @Override
@@ -56,10 +60,10 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(id);
     }
 
-    protected Post findOriginalPost(UUID postDto) {
-        return postRepository.findById(postDto).orElseThrow(() ->
-                new RuntimeException("Post not found " +
-                        "//TODO: Add custom exception"));
+    protected Post findOriginalPost(UUID postId) {
+        return postRepository.findById(postId).orElseThrow(() ->
+                new RuntimeException("Post not found with id: " + postId +
+                        " //TODO: Add custom exception"));
     }
 
     private void inheritFields(Post originalPost, PostUpdateDto postUpdateDto) {

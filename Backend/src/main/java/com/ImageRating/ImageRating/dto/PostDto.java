@@ -1,9 +1,8 @@
 package com.ImageRating.ImageRating.dto;
 
-import com.ImageRating.ImageRating.dto.ImageDto;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +16,7 @@ public class PostDto {
     private String title;
     private String description;
     private int rating;
+    private boolean isFavoritedByUser;
     private List<ImageDto> images;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;

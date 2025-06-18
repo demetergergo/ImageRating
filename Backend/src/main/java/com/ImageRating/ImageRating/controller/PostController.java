@@ -7,6 +7,7 @@ import com.ImageRating.ImageRating.service.PostInteractionService;
 import com.ImageRating.ImageRating.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,9 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<PostDto> listPosts() {
-        return postService.findAllPosts();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return postService.findAllPosts(username);
     }
 
     @PostMapping("/posts/create")
